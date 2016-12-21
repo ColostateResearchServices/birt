@@ -309,7 +309,7 @@
  * Version 0.99
  * http://headjs.com
  */
-;(function(win, undefined) {
+(function (win, undefined) {
     "use strict";
 
     var doc = win.document,
@@ -467,7 +467,7 @@
  * Version 0.99
  * http://headjs.com
  */
-; (function (win, undefined) {
+(function (win, undefined) {
     "use strict";
 
     var doc = win.document,
@@ -1004,8 +1004,7 @@
             doc.detachEvent("onreadystatechange", domContentLoaded);
             domReady();
         }
-    };
-
+    }
     // Catch cases where ready() is called after the browser event has already occurred.
     // we once tried to use readyState "interactive" here, but it caused issues like the one
     // discovered by ChrisS here: http://bugs.jquery.com/ticket/12282#comment:15    
