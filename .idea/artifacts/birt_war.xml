@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="birt:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="birt-4.4.2-CSU.war">
+      <element id="artifact" artifact-name="birt:war exploded" />
+    </root>
+  </artifact>
+</component>
