@@ -171,6 +171,22 @@
 		<servlet-name>EngineServlet</servlet-name>
 	</filter-mapping>
 
+	<!--
+		Security Filter - CSU
+	-->
+	<filter>
+		<filter-name>KCSecurityFilter</filter-name>
+		<filter-class>edu.colostate.birt.KCSecurityFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>KCSecurityFilter</filter-name>
+		<servlet-name>ViewerServlet</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>KCSecurityFilter</filter-name>
+		<servlet-name>EngineServlet</servlet-name>
+	</filter-mapping>
+
 	<!-- Viewer Servlet Context Listener -->
 	<listener>
 		<listener-class>org.eclipse.birt.report.listener.ViewerServletContextListener</listener-class>
