@@ -19,7 +19,11 @@ public class KCSecurityFilter implements Filter {
     }
 
     private String encodeRemoteUser(String remoteUser) {
-        return remoteUser.replace('@', '_').replace('.', '_');
+//        return remoteUser.replace('@', '_').replace('.', '_');
+        if (remoteUser == null || remoteUser.length() < 1) {
+            return Base64.getEncoder().encodeToString("aakers@colostate.edu".getBytes()).replace("=", "");
+        }
+        return Base64.getEncoder().encodeToString(remoteUser.getBytes()).replace("=", "");
     }
 
     public void doFilter(ServletRequest request,
@@ -38,8 +42,8 @@ public class KCSecurityFilter implements Filter {
         String reportName = request.getParameter("__report");
         if (!reportName.endsWith(".rptdesign")) {
             String requestor = reportName.substring(reportName.lastIndexOf('.') + 1);
-            if (remoteUser == null || !requestor.equals(encodeRemoteUser(remoteUser))) {
-                throw new ServletException("User Not Authorized");
+            if (!requestor.equals(encodeRemoteUser(remoteUser))) {
+                throw new ServletException("User Not Authorized (" + encodeRemoteUser(remoteUser) + ")");
             }
         }
         // Pass request back down the filter chain
