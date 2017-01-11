@@ -41,7 +41,7 @@ public class KCSecurityFilter implements Filter {
 
         String remoteUser = (String) request.getAttribute("REMOTE_USER");
         if (remoteUser == null || remoteUser.length() < 1) {
-            remoteUser = request.getParameter("REMOTE_USER");
+            remoteUser = ((HttpServletRequest) request).getRemoteUser();
         }
         String reportName = request.getParameter("__report");
         if (!reportName.endsWith(".rptdesign")) {
