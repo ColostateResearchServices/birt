@@ -21,9 +21,9 @@ public class KCSecurityFilter implements Filter {
     private String encodeRemoteUser(String remoteUser) {
 //        return remoteUser.replace('@', '_').replace('.', '_');
         if (remoteUser == null || remoteUser.length() < 1) {
-            return Base64.getEncoder().encodeToString("aakers@colostate.edu".getBytes()).replace("=", "");
+            return Base64.getEncoder().encodeToString("aakers@colostate.edu".getBytes()).replace("=", "").trim();
         }
-        return Base64.getEncoder().encodeToString(remoteUser.getBytes()).replace("=", "");
+        return Base64.getEncoder().encodeToString(remoteUser.getBytes()).replace("=", "").trim();
     }
 
     public void doFilter(ServletRequest request,
@@ -35,15 +35,15 @@ public class KCSecurityFilter implements Filter {
         String ipAddress = request.getRemoteAddr();
 
         // Log the IP address and current timestamp.
-        System.out.println("IP " + ipAddress + ", Time "
-                + new Date().toString());
+//        System.out.println("IP " + ipAddress + ", Time "
+//                + new Date().toString());
 
         String remoteUser = (String) request.getAttribute("REMOTE_USER");
         String reportName = request.getParameter("__report");
         if (!reportName.endsWith(".rptdesign")) {
             String requestor = reportName.substring(reportName.lastIndexOf('.') + 1);
             if (!requestor.equals(encodeRemoteUser(remoteUser))) {
-                throw new ServletException("User Not Authorized (" + encodeRemoteUser(remoteUser) + ")");
+                throw new ServletException("User Not Authorized (" + encodeRemoteUser(remoteUser) + ") for report request (" + requestor + ")");
             }
         }
         // Pass request back down the filter chain
