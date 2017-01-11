@@ -21,7 +21,8 @@ public class KCSecurityFilter implements Filter {
     private String encodeRemoteUser(String remoteUser) {
 //        return remoteUser.replace('@', '_').replace('.', '_');
         if (remoteUser == null || remoteUser.length() < 1) {
-            return Base64.getEncoder().encodeToString("aakers@colostate.edu".getBytes()).replace("=", "").trim();
+//            return Base64.getEncoder().encodeToString("aakers@colostate.edu".getBytes()).replace("=", "").trim();
+            return "null";
         }
         return Base64.getEncoder().encodeToString(remoteUser.getBytes()).replace("=", "").trim();
     }
@@ -39,6 +40,9 @@ public class KCSecurityFilter implements Filter {
 //                + new Date().toString());
 
         String remoteUser = (String) request.getAttribute("REMOTE_USER");
+        if (remoteUser == null || remoteUser.length() < 1) {
+            remoteUser = request.getParameter("REMOTE_USER");
+        }
         String reportName = request.getParameter("__report");
         if (!reportName.endsWith(".rptdesign")) {
             String requestor = reportName.substring(reportName.lastIndexOf('.') + 1);
