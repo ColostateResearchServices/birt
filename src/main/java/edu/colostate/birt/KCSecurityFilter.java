@@ -9,13 +9,11 @@ import java.util.*;
 
 // Implements Filter class
 public class KCSecurityFilter implements Filter {
+    private static String cookieParm = "filter.login.cookie";
+    private String cookieName;
     public void init(FilterConfig config)
             throws ServletException {
-        // Get init parameter
-//        String testParam = config.getInitParameter("test-param");
-
-        //Print the init parameter
-        //       System.out.println("Test Param: " + testParam);
+        cookieName = config.getInitParameter(cookieParm);
     }
 
     private String encodeRemoteUser(String remoteUser) {
@@ -32,16 +30,14 @@ public class KCSecurityFilter implements Filter {
                          FilterChain chain)
             throws java.io.IOException, ServletException {
 
-        // Get the IP address of client machine.
         String ipAddress = request.getRemoteAddr();
-
-        // Log the IP address and current timestamp.
-//        System.out.println("IP " + ipAddress + ", Time "
-//                + new Date().toString());
 
         String remoteUser = (String) request.getAttribute("REMOTE_USER");
         if (remoteUser == null || remoteUser.length() < 1) {
             remoteUser = ((HttpServletRequest) request).getRemoteUser();
+        }
+        if (remoteUser == null || remoteUser.length() < 1) {
+            remoteUser = getCookieUser((HttpServletRequest) request);
         }
         String reportName = request.getParameter("__report");
         if (!reportName.endsWith(".rptdesign")) {
@@ -52,6 +48,26 @@ public class KCSecurityFilter implements Filter {
         }
         // Pass request back down the filter chain
         chain.doFilter(request, response);
+    }
+
+    protected String getCookieUser(HttpServletRequest request) {
+        Cookie cookie = getPersistentCookie(request);
+        if (cookie != null) {
+            String cookieVal = cookie.getValue();
+            if (cookieVal.indexOf("&") > -1) {
+                return cookieVal.substring(0, cookieVal.indexOf("&"));
+            }
+        }
+        return null;
+    }
+
+    protected Cookie getPersistentCookie(HttpServletRequest request) {
+        for (Cookie cookie : request.getCookies()) {
+            if (cookieName.equals(cookie.getName())) {
+                return cookie;
+            }
+        }
+        return null;
     }
 
     public void destroy() {
