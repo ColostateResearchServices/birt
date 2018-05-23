@@ -40,7 +40,7 @@ public class KCSecurityFilter implements Filter {
             remoteUser = getCookieUser((HttpServletRequest) request);
         }
         String reportName = request.getParameter("__report");
-        if (!reportName.endsWith(".rptdesign")) {
+        if (reportName != null && !reportName.endsWith(".rptdesign")) {
             String requestor = reportName.substring(reportName.lastIndexOf('.') + 1);
             if (!requestor.equals(encodeRemoteUser(remoteUser))) {
                 throw new ServletException("User Not Authorized (" + encodeRemoteUser(remoteUser) + ") for report request (" + requestor + ")");
