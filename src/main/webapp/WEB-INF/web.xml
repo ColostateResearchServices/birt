@@ -28,7 +28,7 @@
 	-->
 	<context-param>
 		<param-name>BIRT_VIEWER_WORKING_FOLDER</param-name>
-		<param-value>../../temp/birt</param-value>
+		<param-value></param-value>
 	</context-param>
 
 	<!--
@@ -96,7 +96,7 @@
 	<!-- Resource location directory. Defaults to ${birt home} -->
 	<context-param>
 		<param-name>BIRT_RESOURCE_PATH</param-name>
-		<param-value>../../temp/birt</param-value>
+		<param-value></param-value>
 	</context-param>
 
 	<!-- Preview report rows limit. An empty value means no limit. -->
