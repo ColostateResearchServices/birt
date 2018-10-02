@@ -177,6 +177,10 @@
 	<filter>
 		<filter-name>KCSecurityFilter</filter-name>
 		<filter-class>edu.colostate.birt.KCSecurityFilter</filter-class>
+		<init-param>
+			<param-name>filter.login.cookie</param-name>
+			<param-value>csuKualiSession</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>KCSecurityFilter</filter-name>
